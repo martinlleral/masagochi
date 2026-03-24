@@ -4,7 +4,7 @@ export const getYeastGrowthRate = (temp) => {
     if (temp < 4) return 0;
     if (temp > 40) return 0;
     const optTemp = 27;
-    const maxRate = 0.45;
+    const maxRate = 0.65;
     return maxRate * Math.exp(-0.5 * Math.pow((temp - optTemp) / 6, 2));
 };
 
@@ -12,7 +12,7 @@ export const getLABGrowthRate = (temp) => {
     if (temp < 8) return 0;
     if (temp > 45) return 0;
     const optTemp = 33;
-    const maxRate = 0.60;
+    const maxRate = 0.80;
     return maxRate * Math.exp(-0.5 * Math.pow((temp - optTemp) / 7, 2));
 };
 
@@ -22,7 +22,7 @@ export const getAltitudeExpansionFactor = (alt) => {
 
 export const getInitialPopulation = (ratio, yeastPop, labPop) => {
     const baseInitial = ratioToInitial[ratio];
-    const matureYeast = yeastPop !== null ? yeastPop : 100;
+    const matureYeast = yeastPop !== null ? yeastPop : 10;
     const matureLab = labPop !== null ? labPop : 100;
     return {
         yeast: matureYeast * baseInitial,
@@ -41,14 +41,14 @@ export const runSimulation = ({ temperature, hydration, flourType, origin, time,
     let y = initial.yeast;
     let l = initial.lab;
     let food = 100 * flourP.nutrients;
-    let acid = flourP.buffer * 5;
+    let acid = 2;
     let gas = 0;
 
     const data = [];
     const hydrationFactor = hydration / 100;
     const rYeastBase = getYeastGrowthRate(temperature) * originBonus;
     const rLABBase = getLABGrowthRate(temperature) * originBonus * flourP.labBonus;
-    const K = 100;
+    const K = 200;
     const altitudeFactor = getAltitudeExpansionFactor(altitude);
 
     let maxVolume = 0;
@@ -57,7 +57,7 @@ export const runSimulation = ({ temperature, hydration, flourType, origin, time,
 
     for (let i = 0; i <= steps; i++) {
         const currentTime = (i / steps) * time;
-        const currentPH = Math.max(3.3, 6.0 - Math.log10(1 + acid / flourP.buffer));
+        const currentPH = Math.max(3.3, 6.0 - Math.log10(1 + acid / (flourP.buffer * 10)));
         const foodFactor = Math.max(0, food / (100 * flourP.nutrients));
         const pHInhibitionYeast = currentPH < 3.8 ? Math.max(0, (currentPH - 3.4) / 0.4) : 1;
         const pHInhibitionLAB = currentPH < 3.5 ? Math.max(0, (currentPH - 3.2) / 0.3) : 1;

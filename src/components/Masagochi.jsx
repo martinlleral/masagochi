@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, Label } from 'recharts';
-import { flourParams, ratioToInitial } from '../utils/model';
+import { flourParams } from '../utils/model';
 import { runSimulation } from '../utils/simulation';
 import { RefreshCw, Trash2, BookOpen, ChevronRight, TrendingUp, AlertCircle } from './Icons';
 import MasagochiAvatar from './MasagochiAvatar';
@@ -43,13 +43,13 @@ export default function Masagochi() {
     const feedCycle = () => {
         if (finalState) {
             generateExperiment();
-            const dilution = ratioToInitial[inoculationRatio];
-            setYeastPop(finalState.yeast * dilution);
-            setLabPop(finalState.lab * dilution);
+            setYeastPop(Math.min(finalState.yeast, 20));
+            setLabPop(Math.min(finalState.lab, 200));
         }
     };
 
     const resetMasagochi = () => {
+        if (!confirm('¿Reiniciar Masagochi? Se perderá la bitácora actual.')) return;
         setYeastPop(null); setLabPop(null); setCycleNumber(1); setHistory([]);
         setSelectedHistoryIndex(null); setTemperature(26); setHydration(70);
         setFlourType('integral'); setOrigin('organica'); setTime(12);
@@ -102,8 +102,8 @@ export default function Masagochi() {
             return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50', message: `Fase de crecimiento - Pico estimado en ${hours}h ${minutes}m` };
         }
         if (time >= peakTime - 0.5 && time <= peakTime + 0.5) {
-            if (peakTime < 4) return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-orange-600 bg-orange-50', message: `¡PICO ALCANZADO! Masa Madre muy activa (Young Levain) - ${hours}h ${minutes}m` };
-            if (peakTime > 10) return { icon: <AlertCircle className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50', message: `Pico alcanzado - Fermentación lenta (Old levain) - ${hours}h ${minutes}m` };
+            if (peakTime < 4) return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-orange-600 bg-orange-50', message: `¡PICO ALCANZADO! Masa madre joven, muy activa - ${hours}h ${minutes}m` };
+            if (peakTime > 10) return { icon: <AlertCircle className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50', message: `Pico alcanzado - Masa madre madura, fermentación lenta - ${hours}h ${minutes}m` };
             return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-green-600 bg-green-50', message: `¡PICO ÓPTIMO! - ${hours}h ${minutes}m` };
         }
         if (timeSincePeak > 0.5 && timeSincePeak <= 2) {
@@ -287,12 +287,13 @@ export default function Masagochi() {
                             <div className="bg-amber-50 rounded-lg p-4 text-sm text-amber-900">
                                 <h4 className="font-bold mb-2">{'\ud83d\udca1'} Modelo v3.0:</h4>
                                 <ul className="space-y-1 list-disc list-inside">
-                                    <li><strong>Fase Lag:</strong> 0-2h (aparentemente quieta)</li>
-                                    <li><strong>Ratio 1:1</strong> a 26°C, 70% hidratación → Pico en ~3h</li>
-                                    <li><strong>Ratio 1:5</strong> → Pico en ~5h</li>
+                                    <li><strong>LAB</strong> = Bacterias Ácido Lácticas (producen acidez y sabor)</li>
+                                    <li><strong>Ratio 1:1</strong> a 26°C → Pico rápido (~2-4h)</li>
+                                    <li><strong>Ratio 1:10</strong> → Pico lento (~10-14h)</li>
                                     <li><strong>Meseta:</strong> 2h después del pico (ideal para hornear)</li>
-                                    <li><strong>Colapso:</strong> Visible después de 24h completas</li>
-                                    <li>Menor hidratación = crecimiento más lento pero más denso</li>
+                                    <li><strong>Temperatura alta</strong> → LAB dominan (más ácido, menos gas)</li>
+                                    <li><strong>Temperatura baja</strong> → Levaduras dominan (más gas, menos ácido)</li>
+                                    <li>Mayor hidratación = fermentación más rápida</li>
                                 </ul>
                             </div>
                         </div>
