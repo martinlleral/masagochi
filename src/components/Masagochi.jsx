@@ -102,9 +102,9 @@ export default function Masagochi() {
             return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50', message: `Fase de crecimiento - Pico estimado en ${hours}h ${minutes}m` };
         }
         if (time >= peakTime - 0.5 && time <= peakTime + 0.5) {
-            if (peakTime < 4) return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-orange-600 bg-orange-50', message: `\u00a1PICO ALCANZADO! Masa Madre muy activa (Young Levain) - ${hours}h ${minutes}m` };
-            if (peakTime > 10) return { icon: <AlertCircle className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50', message: `Pico alcanzado - Fermentaci\u00f3n lenta (Old levain) - ${hours}h ${minutes}m` };
-            return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-green-600 bg-green-50', message: `\u00a1PICO \u00d3PTIMO! - ${hours}h ${minutes}m` };
+            if (peakTime < 4) return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-orange-600 bg-orange-50', message: `¡PICO ALCANZADO! Masa Madre muy activa (Young Levain) - ${hours}h ${minutes}m` };
+            if (peakTime > 10) return { icon: <AlertCircle className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50', message: `Pico alcanzado - Fermentación lenta (Old levain) - ${hours}h ${minutes}m` };
+            return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-green-600 bg-green-50', message: `¡PICO ÓPTIMO! - ${hours}h ${minutes}m` };
         }
         if (timeSincePeak > 0.5 && timeSincePeak <= 2) {
             return { icon: <TrendingUp className="w-5 h-5" />, color: 'text-green-600 bg-green-50', message: `Meseta post-pico (momento ideal para hornear) - Pico fue a las ${hours}h ${minutes}m` };
@@ -123,16 +123,16 @@ export default function Masagochi() {
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-6">
                     <h1 className="text-4xl font-bold text-amber-900 mb-2">{'\ud83c\udf5e'} Masagochi v3.0 {'\ud83c\udf5e'}</h1>
-                    <p className="text-amber-700">Simulador Cient\u00edfico Avanzado de Masa Madre</p>
+                    <p className="text-amber-700">Simulador Científico Avanzado de Masa Madre</p>
                     <p className="text-sm text-amber-600">Ciclo #{cycleNumber}</p>
                 </div>
 
                 <div className="flex gap-4">
-                    {/* Sidebar - Bit\u00e1cora */}
+                    {/* Sidebar - Bitácora */}
                     <div className={`${showHistory ? 'w-72' : 'w-12'} transition-all duration-300 bg-white rounded-lg shadow-lg p-3`}>
                         <button onClick={() => setShowHistory(!showHistory)} className="flex items-center gap-2 w-full text-amber-800 hover:text-amber-600 font-semibold mb-3">
                             <BookOpen className="w-5 h-5" />
-                            {showHistory && <span>Bit\u00e1cora de Masas</span>}
+                            {showHistory && <span>Bitácora de Masas</span>}
                         </button>
                         {showHistory && (
                             <div className="space-y-2 max-h-96 overflow-y-auto">
@@ -166,22 +166,22 @@ export default function Masagochi() {
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">Ratio de Refresco: {inoculationRatio}</label>
                                 <select value={inoculationRatio} onChange={(e) => setInoculationRatio(e.target.value)} className="w-full p-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500">
-                                    <option value="1:1">1:1 (Muy activo, pico r\u00e1pido)</option>
+                                    <option value="1:1">1:1 (Muy activo, pico rápido)</option>
                                     <option value="1:2">1:2</option>
                                     <option value="1:3">1:3 (Equilibrado)</option>
                                     <option value="1:4">1:4</option>
                                     <option value="1:5">1:5</option>
-                                    <option value="1:10">1:10 (Lento, pico tard\u00edo)</option>
+                                    <option value="1:10">1:10 (Lento, pico tardío)</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Temperatura: {temperature}\u00b0C</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Temperatura: {temperature}°C</label>
                                 <input type="range" min="15" max="35" value={temperature} onChange={(e) => setTemperature(Number(e.target.value))} className="w-full h-2 bg-amber-200 rounded-lg appearance-none cursor-pointer" />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Hidrataci\u00f3n: {hydration}%</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Hidratación: {hydration}%</label>
                                 <input type="range" min="50" max="120" value={hydration} onChange={(e) => setHydration(Number(e.target.value))} className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer" />
                             </div>
 
@@ -203,12 +203,12 @@ export default function Masagochi() {
                                 <label className="block text-sm font-semibold text-gray-700 mb-1">Origen</label>
                                 <select value={origin} onChange={(e) => setOrigin(e.target.value)} className="w-full p-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500">
                                     <option value="convencional">Convencional</option>
-                                    <option value="organica">Org\u00e1nica (+15% actividad)</option>
+                                    <option value="organica">Orgánica (+15% actividad)</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Tiempo de Observaci\u00f3n: {time}h</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Tiempo de Observación: {time}h</label>
                                 <input type="range" min="3" max="48" value={time} onChange={(e) => setTime(Number(e.target.value))} className="w-full h-2 bg-green-200 rounded-lg appearance-none cursor-pointer" />
                                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                                     <span>3h (pico)</span>
@@ -226,7 +226,7 @@ export default function Masagochi() {
                             </div>
                         </div>
 
-                        {/* Visualizaci\u00f3n Principal */}
+                        {/* Visualización Principal */}
                         <div className="lg:col-span-2 space-y-4">
                             <div className="bg-white rounded-lg shadow-lg p-5">
                                 <div className="flex items-center justify-between gap-4">
@@ -262,12 +262,12 @@ export default function Masagochi() {
                             )}
 
                             <div className="bg-white rounded-lg shadow-lg p-5">
-                                <h3 className="text-lg font-bold text-amber-800 mb-3">Evoluci\u00f3n de la Fermentaci\u00f3n</h3>
+                                <h3 className="text-lg font-bold text-amber-800 mb-3">Evolución de la Fermentación</h3>
                                 <ResponsiveContainer width="100%" height={350}>
                                     <LineChart data={simulationData}>
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <XAxis dataKey="time" label={{ value: 'Tiempo (horas)', position: 'insideBottom', offset: -5 }} />
-                                        <YAxis yAxisId="left" label={{ value: 'Poblaci\u00f3n / Volumen', angle: -90, position: 'insideLeft' }} />
+                                        <YAxis yAxisId="left" label={{ value: 'Población / Volumen', angle: -90, position: 'insideLeft' }} />
                                         <YAxis yAxisId="right" orientation="right" domain={[3, 6.5]} label={{ value: 'pH', angle: 90, position: 'insideRight' }} />
                                         <Tooltip />
                                         <Legend />
@@ -288,11 +288,11 @@ export default function Masagochi() {
                                 <h4 className="font-bold mb-2">{'\ud83d\udca1'} Modelo v3.0:</h4>
                                 <ul className="space-y-1 list-disc list-inside">
                                     <li><strong>Fase Lag:</strong> 0-2h (aparentemente quieta)</li>
-                                    <li><strong>Ratio 1:1</strong> a 26\u00b0C, 70% hidrataci\u00f3n → Pico en ~3h</li>
+                                    <li><strong>Ratio 1:1</strong> a 26°C, 70% hidratación → Pico en ~3h</li>
                                     <li><strong>Ratio 1:5</strong> → Pico en ~5h</li>
-                                    <li><strong>Meseta:</strong> 2h despu\u00e9s del pico (ideal para hornear)</li>
-                                    <li><strong>Colapso:</strong> Visible despu\u00e9s de 24h completas</li>
-                                    <li>Menor hidrataci\u00f3n = crecimiento m\u00e1s lento pero m\u00e1s denso</li>
+                                    <li><strong>Meseta:</strong> 2h después del pico (ideal para hornear)</li>
+                                    <li><strong>Colapso:</strong> Visible después de 24h completas</li>
+                                    <li>Menor hidratación = crecimiento más lento pero más denso</li>
                                 </ul>
                             </div>
                         </div>
