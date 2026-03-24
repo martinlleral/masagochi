@@ -4,11 +4,10 @@ Simulador interactivo de fermentación de masa madre que modela en tiempo real e
 
 ## Stack
 
-- **React 18** (vía CDN, sin bundler)
+- **React 19** + **Vite 8**
 - **Recharts** para gráficos de línea
-- **Tailwind CSS** para estilos
-- **Babel** para transformación JSX en el navegador
-- **HTML5** single-page application
+- **Tailwind CSS 4** para estilos
+- **GitHub Pages** con deploy automático vía GitHub Actions
 
 ## Funcionalidades
 
@@ -18,6 +17,20 @@ Simulador interactivo de fermentación de masa madre que modela en tiempo real e
 - Gráficos interactivos de evolución poblacional, acidez, gas y nutrientes
 - Historial de ciclos de refresco para seguir la evolución de la masa madre
 - Diseño responsive y estética limpia
+
+## Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+npm run preview
+```
 
 ## Demo
 
